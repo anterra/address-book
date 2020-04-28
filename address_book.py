@@ -9,7 +9,10 @@
 #program should ask you what you want to do, at beginning, when viewing all, and when viewing a specific contact
 
 #work flow notes:
+
 #ver 1: stored for later retrieval indicates pickle method. list of contacts. name of object was person's name, but was separate from their actual name, which would
+
+
     #make it difficult to create new contacts -- would have to define both name of person object and name of person
 #ver 2: going to use dictionary. that way name is key and can be more easily accessed and manipulated
 
@@ -37,6 +40,7 @@ def browse():
     for names in address_book.items():
         print(names)
 
+
 def search():
     """Allows the user to search the address book for a certain person or group of people"""
     person = input("Who are you searching for? ")
@@ -57,6 +61,7 @@ def add(contact):
 def delete(contact):
     """Allows the user to delete some"""
 
+
 #store the details for each person as a list, then the list becomes the single value for each key
 
 Liz = Contact("Liz", "402.7297", "liz@gmail.com")
@@ -73,10 +78,9 @@ address_book = {
     "Hope": Hope_details,
     "James": James_details,
     "Laura": Laura_details,
-}
 
 while True:
-    contact = Contact("", "", "")
+    contact = Contact("", "", "", "")
     action = input("""What would you like to do?: 
             [browse] address book
             [view] a contact
