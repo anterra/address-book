@@ -4,16 +4,21 @@
 #details must be stored for later retrieval.
 
 #planning:
-#different classes to view all, search for, add, delete, modify contacts
+#class Contact will define a person and their contact information
+#different methods to view all, search for, add, delete, modify contacts
 #program should ask you what you want to do, at beginning, when viewing all, and when viewing a specific contact
 
-class Contact:
+#work flow notes:
+#ver 1: had a list of contacts. name of object was person's name, but was separate from their actual name, which would
+    #make it difficult to create new contacts -- would have to define both name of person object and name of person
+#ver 2: going to use dictionary. that way name is key and can be more easily accessed and manipulated
 
-    def __init__(self, name, number, email, group):
+
+class Contact:
+    def __init__(self, name, number, email):
         self.name = name
         self.number = number
         self.email = email
-        self.group = group
 
     def view(self):
         """Allows the user to view all contact details of a contact"""
@@ -56,14 +61,15 @@ def delete(contact):
 
 
 #contacts
-Liz = Contact("Liz", "502.7298", "liz@gmail.com", "friend")
-Devon = Contact("Devon", "561.9026", "devon@gmail.com", "friend")
-Dad = Contact("Dad", "401.0251", "dad@gmail.com", "family")
-Hope = Contact("Hope", "720.0864", "hope@gmail.com", "family")
-James = Contact("James", "308.3247", "james@gmail.com", "colleague")
-Laura = Contact("Laura", "616.0276", "laura@gmail.com", "colleague")
+address_book = {
+    "Liz": "402.7297", "liz@gmail.com", "friend",
+    "Devon": "461.9025", "devon@gmail.com", "friend",
+    "Dad": "301.0250", "dad@gmail.com", "family",
+    "Hope": "620.0863", "hope@gmail.com", "family",
+    "James": "208.3246", "james@gmail.com", "colleague"
+    "Laura": "516.0275", "laura@gmail.com", "colleague"
+}
 
-address_book = [Liz, Devon, Dad, Hope, James, Laura]
 
 while True:
     contact = Contact("", "", "", "")
