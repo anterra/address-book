@@ -1,5 +1,5 @@
-## Practice Programs
+## Address Book
 ### by Anterra Kennedy
 
-Python programs created myself based off of various prompts and challenges, for the purpose of practicing and becoming 
-proficient in Python. 
+A command-line program created from scratch, which allows a user to browse, add, modify, delete and add contacts to an 
+address book containing their contact information, which is stored for later retrieval. 
