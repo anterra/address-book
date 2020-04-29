@@ -63,6 +63,7 @@ def browse():
     print("\nContacts in Address Book:")
     for names, details in stored_contacts.items():
         print(names)
+    print("\n")
 
 
 def view():
@@ -74,8 +75,9 @@ def view():
         if person in names:
             print("\nName: {}, Number: {}, Email: {}\n".format(names, details[0], details[1]))
             break
-        else:
-            print("No contact {} exists.".format(person))
+        #else:
+            #print("No contact {} exists.".format(person))
+            #need to do this without it being inside the for loop so it doens't print this for every other contact
 
 
 def search():
@@ -107,14 +109,29 @@ def add():
     """Allows the user to add someone to the address book"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
+    newcontact_name = input("What is the name of the contact you would like to add? ")
+    newcontact_number = input("What is their number? ")
+    newcontact_email = input("What is their email address? ")
+    newcontact_group = input("What group are they in? ")
+
+    stored_contacts[newcontact_name] = [newcontact_number, newcontact_email, newcontact_group]
+    f = open(address_book_file, "wb")
+    pickle.dump(stored_contacts, f)
+    f.close()
+    print("\nNew contact {} has been created.\n".format(newcontact_name))
 
 
-def delete(contact):
+def delete():
     """Allows the user to delete a contact"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     contact = input("Who would you like to delete? ")
-    del address_book[contact]
+    del stored_contacts[contact]
+    f = open(address_book_file, "wb")
+    pickle.dump(stored_contacts, f)
+    f.close()
+    print("\n{} has been deleted.\n".format(contact))
+
 
 while True:
     action = input("""What would you like to do?: 
