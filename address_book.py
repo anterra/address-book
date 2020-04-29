@@ -7,16 +7,19 @@
 # class Contact will define a person and their contact information
 # different methods to view all, search for, add, delete, modify contacts
 # program should ask you what you want to do, at beginning, when viewing all, and when viewing a specific contact
+# storage for later retrieval indicates use of pickle
 
 # work flow notes:
 
-# ver 1: address_book was a list of contacts. name of object was person's name,
+# ver 1: address_book as a list of contacts (being Contact objects). name of object was person's name,
 #   but was separate from their actual name, which would make it difficult to create new contacts --
-#   would have to define both name of person object and name of person
+#   would have to define both name of person object and name of person.. needed rethinking
 # ver 2: use dictionary instead. that way name is key and can be more easily accessed and manipulated
 # ver 3: got dictionary of contacts to work, by storing multiple details as a list, then the list is the single value
 #   for the name key. implemented pickle and storage of contacts
-# ver 4: added "group" classification to contacts so they could be sorted by type
+# ver 4: added "group" classification to contacts so they could be sorted by type of contact
+# ver 5: all functionality is working and thoroughly tested! only problem: changes made to address_book (new or deleted
+#   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
 
 
 import pickle
@@ -56,7 +59,7 @@ del address_book
 
 
 def browse():
-    """Allows the user to view the entire address book"""
+    """Allows the user to view all the names in the address book"""
     # returns a list of names
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
@@ -96,6 +99,9 @@ def search():
                 proceed = input("No contact {} exists. Would you like to create a new contact?".format(person))
                 if proceed == "yes":
                     add()
+                    break
+                else:
+                    break
     elif type == "group":
         group = input("Which group would you like to view? [friends], [family], or [colleagues]: ")
         print("\nThe contacts in group '{}' are: ".format(group))
@@ -106,7 +112,7 @@ def search():
 
 
 def add():
-    """Allows the user to add someone to the address book"""
+    """Allows the user to add someone new to the address book"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     newcontact_name = input("What is the name of the contact you would like to add? ")
@@ -122,7 +128,7 @@ def add():
 
 
 def delete():
-    """Allows the user to delete a contact"""
+    """Allows the user to delete a contact from the address book"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     contact = input("Who would you like to delete? ")
@@ -136,8 +142,8 @@ def delete():
 while True:
     action = input("""What would you like to do?: 
             [browse] address book
-            [view] a contact
-            [search] for someone
+            [view] a contact's details
+            [search] for a person or group of people
             [add] someone new
             [delete] someone
             [quit] --> """)
