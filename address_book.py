@@ -54,6 +54,8 @@ address_book = {
 }
 
 # in order to call stored changes from last time, need to call in old address book not just reset as default contacts
+# f = open(address_book_file, "rb")
+# stored_contacts = pickle.load(f)
 f = open(address_book_file, "wb")
 pickle.dump(address_book, f)
 f.close()
@@ -144,7 +146,21 @@ def modify():
     """Allows the user to modify a contact's details"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
-
+    contact = input("Which contact would you like to modify? ")
+    info_type = input("What info would you like to change? [number] [email] [group] ")
+    if info_type == "number":
+        variable = 0
+    elif info_type == "email":
+        variable = 1
+    elif info_type == "group":
+        variable = 2
+    else:
+        print("invalid entry")
+    info = input("What is their new {}? ".format(info_type))
+    for names, details in stored_contacts.items():
+        if names == contact:
+            details[variable] = info
+    print("{}'s {} has been updated to {}.".format(contact, info_type, info))
 
 
 while True:
@@ -170,4 +186,4 @@ while True:
     elif action == "modify":
         modify()
     else:
-        print("Unknown action")
+        print("Unknown action\n")
