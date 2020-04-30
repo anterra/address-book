@@ -20,6 +20,7 @@
 # ver 4: added "group" classification to contacts so they could be sorted by type of contact
 # ver 5: all functionality is working and thoroughly tested! only problem: changes made to address_book (new or deleted
 #   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
+#   also needs modify method
 
 
 import pickle
@@ -52,6 +53,7 @@ address_book = {
     Laura.name: [Laura.number, Laura.email, Laura.group]
 }
 
+# in order to call stored changes from last time, need to call in old address book not just reset as default contacts
 f = open(address_book_file, "wb")
 pickle.dump(address_book, f)
 f.close()
@@ -138,6 +140,12 @@ def delete():
     f.close()
     print("\n{} has been deleted.\n".format(contact))
 
+def modify():
+    """Allows the user to modify a contact's details"""
+    f = open(address_book_file, "rb")
+    stored_contacts = pickle.load(f)
+
+
 
 while True:
     action = input("""What would you like to do?: 
@@ -159,5 +167,7 @@ while True:
         delete()
     elif action == "add":
         add()
+    elif action == "modify":
+        modify()
     else:
         print("Unknown action")
