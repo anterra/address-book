@@ -21,7 +21,8 @@
 # ver 5: all functionality is working and thoroughly tested! only problem: changes made to address_book (new or deleted
 #   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
 #   also needs modify method
-# ver 6: added modify method.
+# ver 6: added modify method. plan to get modifications to store: keep the address_book.data file somewhere else on the
+#   hard drive and refer to that path so changes are kept and called on each retrieval 
 
 
 import pickle
