@@ -21,6 +21,7 @@
 # ver 5: all functionality is working and thoroughly tested! only problem: changes made to address_book (new or deleted
 #   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
 #   also needs modify method
+# ver 6: added modify method.
 
 
 import pickle
@@ -142,31 +143,34 @@ def delete():
     f.close()
     print("\n{} has been deleted.\n".format(contact))
 
+
 def modify():
     """Allows the user to modify a contact's details"""
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     contact = input("Which contact would you like to modify? ")
-    info_type = input("What info would you like to change? [number] [email] [group] ")
-    if info_type == "number":
-        variable = 0
-    elif info_type == "email":
-        variable = 1
-    elif info_type == "group":
-        variable = 2
-    else:
-        print("invalid entry")
-    info = input("What is their new {}? ".format(info_type))
     for names, details in stored_contacts.items():
-        if names == contact:
+        if contact in names:
+            info_type = input("What info would you like to change? [number] [email] [group] ")
+            if info_type == "number":
+                variable = 0
+            elif info_type == "email":
+                variable = 1
+            elif info_type == "group":
+                variable = 2
+            else:
+                print("invalid entry")
+                break
+            info = input("What is their new {}? ".format(info_type))
             details[variable] = info
-    print("{}'s {} has been updated to {}.".format(contact, info_type, info))
+            print("{}'s {} has been updated to {}.".format(contact, info_type, info))
 
 
 while True:
     action = input("""What would you like to do?: 
             [browse] address book
             [view] a contact's details
+            [modify] a contact's details
             [search] for a person or group of people
             [add] someone new
             [delete] someone
