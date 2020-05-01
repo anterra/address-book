@@ -22,8 +22,12 @@
 #   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
 #   also needs modify method
 # ver 6: added modify method. plan to get modifications to store: keep the address_book.data file somewhere else on the
-#   hard drive and refer to that path so changes are kept and called on each retrieval. also possibly store 'deleted'
-#   people into a deleted folder instead of actually deleting
+#   hard drive and refer to that path so changes are kept and called on each retrieval.
+#   also: if a contact name key doesn't exist when searched for, need to print a "no such contact" response -- but only
+#   once! right now its printing as many times as there are contacts who are not the specified key since its in a for
+#   loop, even if the key does exist
+# ver 7: fixed above issue with else: no key statement, by switching from iterating over dict indexes, to instead using
+#   dict.get() method, which allows me to provide a failure message if no key found.
 
 
 import pickle
@@ -67,7 +71,6 @@ del address_book
 
 def browse():
     """Allows the user to view all the names in the address book"""
-    # returns a list of names
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     print("\nContacts in Address Book:")
@@ -81,13 +84,11 @@ def view():
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     person = input("Who's contact details would you like to view? ")
-    for names, details in stored_contacts.items():
-        if person in names:
-            print("\nName: {}, Number: {}, Email: {}\n".format(names, details[0], details[1]))
-            break
-        else:
-            print("No contact {} exists.".format(person))
-            #need to do this without it being inside the for loop so it doens't print this for every other contact
+    details = stored_contacts.get(person, "No such contact")
+    if details != "No such contact":
+        print("\nName: {}, Number: {}, Email: {}\n".format(person, details[0], details[1]))
+    else:
+        print(details)
 
 
 def search():
