@@ -22,7 +22,8 @@
 #   contacts) don't save/load on subsequent runs of the program. (i.e. running again resets to default contacts)...
 #   also needs modify method
 # ver 6: added modify method. plan to get modifications to store: keep the address_book.data file somewhere else on the
-#   hard drive and refer to that path so changes are kept and called on each retrieval 
+#   hard drive and refer to that path so changes are kept and called on each retrieval. also possibly store 'deleted'
+#   people into a deleted folder instead of actually deleting
 
 
 import pickle
@@ -84,8 +85,8 @@ def view():
         if person in names:
             print("\nName: {}, Number: {}, Email: {}\n".format(names, details[0], details[1]))
             break
-        #else:
-            #print("No contact {} exists.".format(person))
+        else:
+            print("No contact {} exists.".format(person))
             #need to do this without it being inside the for loop so it doens't print this for every other contact
 
 
@@ -163,7 +164,10 @@ def modify():
                 print("invalid entry")
                 break
             info = input("What is their new {}? ".format(info_type))
+            f = open(address_book_file, "wb")
             details[variable] = info
+            pickle.dump(stored_contacts, f)
+            f.close()
             print("{}'s {} has been updated to {}.".format(contact, info_type, info))
 
 
