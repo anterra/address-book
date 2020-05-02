@@ -28,6 +28,8 @@
 #   loop, even if the key does exist
 # ver 7: fixed above issue with else: no key statement, by switching from iterating over dict indexes, to instead using
 #   dict.get() method, which allows me to provide a failure message if no key found.
+# ver 8: instead of iterating over names, detail in stored_contacts.items() at all, replaced with dictionary methods
+#   .keys(), .values(), .get()
 
 
 import pickle
@@ -74,8 +76,10 @@ def browse():
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     print("\nContacts in Address Book:")
-    for names, details in stored_contacts.items():
-        print(names)
+    #for names, details in stored_contacts.items():
+        #print(names)
+    contacts = stored_contacts.keys()
+    print(contacts)
     print("\n")
 
 
