@@ -32,7 +32,6 @@
 #   .keys(), .values(), .get()
 
 # NOTE: I realize this is not object oriented, but rather functional programming
-# load contacts functions? since i reload from pickle so many times might as well enclose it in a function if reused
 
 
 import pickle
