@@ -15,7 +15,7 @@
 #   but was separate from their actual name, which would make it difficult to create new contacts --
 #   would have to define both name of person object and name of person.. needed rethinking
 # ver 2: use dictionary instead. that way name is key and can be more easily accessed and manipulated
-# ver 3: got dictionary of contacts to work, by storing multiple details as a list, then the list is the single value
+# ver 3: got dictionary of contacts to work, by storing multiple details as a list, then the list is the ssingle value
 #   for the name key. implemented pickle and storage of contacts
 # ver 4: added "group" classification to contacts so they could be sorted by type of contact
 # ver 5: all functionality is working and thoroughly tested! only problem: changes made to address_book (new or deleted
@@ -28,12 +28,14 @@
 #   loop, even if the key does exist
 # ver 7: fixed above issue with else: no key statement, by switching from iterating over dict indexes, to instead using
 #   dict.get() method, which allows me to provide a failure message if no key found.
-# ver 8: instead of iterating over names, detail in stored_contacts.items() at all, replaced with dictionary methods
+# ver 8: instead of iterating over (names, detail) in stored_contacts.items(), replaced with dictionary methods
 #   .keys(), .values(), .get()
+
+# NOTE: I realize this is not object oriented, but rather functional programming
+# load contacts functions? since i reload from pickle so many times might as well enclose it in a function if reused
 
 
 import pickle
-
 
 class Contact:
     def __init__(self, name, number, email, group):
@@ -62,9 +64,7 @@ address_book = {
     Laura.name: [Laura.number, Laura.email, Laura.group]
 }
 
-# in order to call stored changes from last time, need to call in old address book not just reset as default contacts
-# f = open(address_book_file, "rb")
-# stored_contacts = pickle.load(f)
+
 f = open(address_book_file, "wb")
 pickle.dump(address_book, f)
 f.close()
@@ -76,10 +76,8 @@ def browse():
     f = open(address_book_file, "rb")
     stored_contacts = pickle.load(f)
     print("\nContacts in Address Book:")
-    #for names, details in stored_contacts.items():
-        #print(names)
-    contacts = stored_contacts.keys()
-    print(contacts)
+    for names, details in stored_contacts.items():
+        print(names)
     print("\n")
 
 
@@ -130,7 +128,7 @@ def add():
     newcontact_name = input("What is the name of the contact you would like to add? ")
     newcontact_number = input("What is their number? ")
     newcontact_email = input("What is their email address? ")
-    newcontact_group = input("What group are they in? ")
+    newcontact_group = input("What group are they in? [friends] [family] [colleagues] ")
 
     stored_contacts[newcontact_name] = [newcontact_number, newcontact_email, newcontact_group]
     f = open(address_book_file, "wb")
